@@ -46,7 +46,6 @@ pipeline {
                     test -f build/index.html
                     npm test
                 '''
-                junit 'test-results/junit.xml'
             }
         }
 
@@ -66,10 +65,10 @@ pipeline {
                 sh '''
                     echo "HOME is $HOME"
                     echo "NPM_CONFIG_CACHE is $NPM_CONFIG_CACHE"
-                    npm install netlify-cli
-                    node_modules/.bin/netlify --version
-                    # Add your actual deploy command here
+                    npx netlify-cli --version
+                    npx netlify-cli deploy --dir=build --prod
                 '''
+                echo 'Deployed successfully'
             }
         }
     }
