@@ -9,16 +9,19 @@ pipeline {
                     reuseNode true
                 }
             }
+            environment {
+                HOME            = "${WORKSPACE}"
+                NPM_CONFIG_CACHE = "${HOME}/.npm"
+            }
             steps {
                 echo 'Building...'
                 sh '''
                     ls -la
-                    node  --version
+                    node --version
                     npm --version
                     npm ci
                     npm run build
                 '''
-                sh 'npm run build'
             }
         }
     }
