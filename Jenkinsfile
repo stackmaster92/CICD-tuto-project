@@ -57,10 +57,18 @@ pipeline {
                     reuseNode true
                 }
             }
+            environment {
+                HOME = "${WORKSPACE}"
+                NPM_CONFIG_CACHE = "${HOME}/.npm"
+            }
             steps {
+                echo 'Deploying...'
                 sh '''
+                    echo "HOME is $HOME"
+                    echo "NPM_CONFIG_CACHE is $NPM_CONFIG_CACHE"
                     npm install netlify-cli
                     node_modules/.bin/netlify --version
+                    # Add your actual deploy command here
                 '''
             }
         }
