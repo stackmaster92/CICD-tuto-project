@@ -10,12 +10,14 @@ pipeline {
                 }
             }
             environment {
-                HOME            = "${WORKSPACE}"
+                HOME = "${WORKSPACE}"
                 NPM_CONFIG_CACHE = "${HOME}/.npm"
             }
             steps {
                 echo 'Building...'
                 sh '''
+                    echo "HOME is $HOME"
+                    echo "NPM_CONFIG_CACHE is $NPM_CONFIG_CACHE"
                     ls -la
                     node --version
                     npm --version
@@ -32,11 +34,19 @@ pipeline {
                     reuseNode true
                 }
             }
+            environment {
+                HOME = "${WORKSPACE}"
+                NPM_CONFIG_CACHE = "${HOME}/.npm"
+            }
             steps {
+                echo 'Testing...'
                 sh '''
+                    echo "HOME is $HOME"
+                    echo "NPM_CONFIG_CACHE is $NPM_CONFIG_CACHE"
                     test -f build/index.html
                     npm test
                 '''
+                junit 'test-results/junit.xml'
             }
         }
 
